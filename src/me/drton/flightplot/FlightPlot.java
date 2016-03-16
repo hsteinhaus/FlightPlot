@@ -319,9 +319,13 @@ public class FlightPlot {
         }
     }
 
+    static FlightPlot instance = null;
+    static String[] mainArgs = null;
+
     public static void main(String[] args)
             throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException,
             IllegalAccessException {
+        mainArgs = args;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -334,7 +338,10 @@ public class FlightPlot {
                     e.printStackTrace();
                     return;
                 }
-                new FlightPlot();
+                instance = new FlightPlot();
+                if (instance!=null && mainArgs.length>=1) {
+                    instance.openLog(mainArgs[0]);
+                }
             }
         });
     }
